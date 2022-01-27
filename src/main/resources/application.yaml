@@ -1,0 +1,43 @@
+camunda:
+  bpm:
+    admin-user:
+      id: CamundaAdmin
+      password: CamundaAdmin
+      firstName: Camunda
+      lastName: Admin
+      email: CamundaAdmin@camunda.com
+#    enableExceptionsAfterUnhandledBpmnError: true
+    filter:
+      create: All tasks
+    generic-properties:
+      properties:
+        # History Cleanup
+#        historyCleanupStrategy: removalTimeBased
+#        historyRemovalTimeStrategy: end
+#        historyTimeToLive: 30
+#        batchOperationHistoryTimeToLive: 1
+#        historyCleanupJobLogTimeToLive: 1
+#        historyCleanupBatchWindowStartTime: "00:00"
+#        historyCleanupBatchWindowEndTime: "10:00"
+#        saturdayHistoryCleanupBatchWindowStartTime: "21:00"
+#        saturdayHistoryCleanupBatchWindowEndTime: "02:00"
+#        sundayHistoryCleanupBatchWindowStartTime: "21:00"
+#        sundayHistoryCleanupBatchWindowEndTime: "02:00"
+        # Java Serialization - enable at risk!
+#        javaSerializationFormatEnabled: true
+        # MDC Logging
+#        loggingContextActivityId: activityName
+        # Tasklist Query
+#        queryMaxResultsLimit: 2000
+        # Telemetry
+        initializeTelemetry: false
+        telemetryReporterActivate: false
+#    job-execution:
+#     enabled: false
+spring:
+  h2.console.enabled: true
+  datasource:
+    #    url: jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:camunda-db
+    username: sa
+    password: sa
