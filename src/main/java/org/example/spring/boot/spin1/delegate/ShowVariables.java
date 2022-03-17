@@ -1,4 +1,4 @@
-package org.camunda.bpm.spring.boot.spin1.delegate;
+package org.example.spring.boot.spin1.delegate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,7 +6,7 @@ import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.variable.value.ObjectValue;
-import org.camunda.bpm.spring.boot.spin1.model.Customer;
+import org.example.spring.boot.spin1.model.Customer;
 import org.camunda.spin.json.SpinJsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

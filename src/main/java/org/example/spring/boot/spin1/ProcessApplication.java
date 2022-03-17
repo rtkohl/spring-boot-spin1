@@ -1,4 +1,4 @@
-package org.camunda.bpm.spring.boot.spin1;
+package org.example.spring.boot.spin1;
 
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
