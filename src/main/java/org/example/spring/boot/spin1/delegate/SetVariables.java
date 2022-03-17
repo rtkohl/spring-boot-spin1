@@ -1,7 +1,9 @@
 package org.example.spring.boot.spin1.delegate;
 
 import camundajar.impl.com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.RepositoryService;
+import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.variable.Variables;
@@ -20,17 +22,19 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Slf4j
 public class SetVariables implements JavaDelegate {
-    private final static Logger LOGGER = LoggerFactory.getLogger(SetVariables.class);
-
-    @Autowired
     private RepositoryService repositoryService;
+
+    public SetVariables(RepositoryService repositoryService) {
+        this.repositoryService = repositoryService;
+    }
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         String processKey = repositoryService.getProcessDefinition(delegateExecution.getProcessDefinitionId()).getKey();
 
-        LOGGER.info("-----> execute: Enter {}", processKey);
+        if (log.isDebugEnabled()) log.debug("-----> execute: Enter {}", processKey);
 
         String taskNumbers = "{ \"taskNumber\" : [ \"A\", \"B\", \"C\" ] }";
         SpinJsonNode spinJson = Spin.JSON(taskNumbers);
@@ -55,6 +59,6 @@ public class SetVariables implements JavaDelegate {
 
         delegateExecution.setVariable("accountCustomersGsonToJson", new Gson().toJson(accountCustomers));
 
-        LOGGER.info("-----> execute: Exit {}", processKey);
+        if (log.isDebugEnabled()) log.debug("-----> execute: Exit {}", processKey);
     }
 }

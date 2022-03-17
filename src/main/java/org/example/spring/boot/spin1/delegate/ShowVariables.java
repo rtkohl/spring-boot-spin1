@@ -2,6 +2,7 @@ package org.example.spring.boot.spin1.delegate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -16,20 +17,22 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
+@Slf4j
 public class ShowVariables implements JavaDelegate {
-     private final static Logger LOGGER = LoggerFactory.getLogger(ShowVariables.class);
-
-    @Autowired
     private RepositoryService repositoryService;
+
+    public ShowVariables(RepositoryService repositoryService) {
+        this.repositoryService = repositoryService;
+    }
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         String processKey = repositoryService.getProcessDefinition(delegateExecution.getProcessDefinitionId()).getKey();
 
-        LOGGER.info("-----> execute: Enter {}", processKey);
+        if (log.isDebugEnabled()) log.debug("-----> execute: Enter {}", processKey);
 
         SpinJsonNode taskNumbers = (SpinJsonNode) delegateExecution.getVariable("taskNumbers");
-        LOGGER.info("-----> {}: taskNumbers = {}", processKey, taskNumbers.toString());
+        if (log.isDebugEnabled()) log.debug("-----> {}: taskNumbers = {}", processKey, taskNumbers.toString());
 
         ObjectValue accountCustomersObject = delegateExecution.getVariableTyped("accountCustomersJava");
         processAccountCustomersObject(accountCustomersObject, processKey, "Java");
@@ -48,7 +51,7 @@ public class ShowVariables implements JavaDelegate {
                 Map<String, List<Customer>> accountCustomers = new ObjectMapper().readValue(accountCustomersString, typeReference);
                 for (Map.Entry<String, List<Customer>> arrayEntry : accountCustomers.entrySet()) {
                     for (Customer customer : arrayEntry.getValue()) {
-                        LOGGER.info("-----> {}: Deserialized {}: Account Name = {} - Customer Name = {} {}",
+                        if (log.isDebugEnabled()) log.debug("-----> {}: Deserialized {}: Account Name = {} - Customer Name = {} {}",
                                 processKey, "GsonToJson String", customer.getAccount(), customer.getFirstName(), customer.getLastName());
                         // Do something with Customer.
                     }
@@ -56,7 +59,7 @@ public class ShowVariables implements JavaDelegate {
             }
         }
 
-        LOGGER.info("-----> execute: Exit {}", processKey);
+        if (log.isDebugEnabled()) log.debug("-----> execute: Exit {}", processKey);
     }
 
     private void processAccountCustomersObject(ObjectValue accountCustomersObject, String processKey, String type) {
@@ -64,7 +67,7 @@ public class ShowVariables implements JavaDelegate {
         Iterator<Map.Entry<String, List<Customer>>> mapIterator = accountCustomers.entrySet().iterator();
         for (Map.Entry<String, List<Customer>> arrayEntry : accountCustomers.entrySet()) {
             for (Customer customer : arrayEntry.getValue()) {
-                LOGGER.info("-----> {}: Deserialized {}: Account Name = {} - Customer Name = {} {}",
+                if (log.isDebugEnabled()) log.debug("-----> {}: Deserialized {}: Account Name = {} - Customer Name = {} {}",
                         processKey, type, customer.getAccount(), customer.getFirstName(), customer.getLastName());
                 // Do something with Customer.
             }
