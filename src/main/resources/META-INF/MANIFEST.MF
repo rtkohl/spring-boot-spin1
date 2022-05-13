@@ -1,0 +1,1 @@
+Main-Class: org.example.spring.boot.spin1.ProcessApplication

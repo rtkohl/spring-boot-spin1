@@ -1,4 +1,4 @@
-package org.camunda.bpm.spring.boot.spin1.configuration.spi;
+package org.example.spring.boot.spin1.configuration.spi;
 
 import org.camunda.spin.impl.json.jackson.format.JacksonJsonDataFormat;
 import org.camunda.spin.impl.json.jackson.format.MapJacksonJsonTypeDetector;

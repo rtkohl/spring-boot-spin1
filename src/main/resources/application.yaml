@@ -6,38 +6,93 @@ camunda:
       firstName: Camunda
       lastName: Admin
       email: CamundaAdmin@camunda.com
-#    enableExceptionsAfterUnhandledBpmnError: true
+    authorization:
+      enabled: true
+    #    enableExceptionsAfterUnhandledBpmnError: true
     filter:
       create: All tasks
     generic-properties:
       properties:
         # History Cleanup
-#        historyCleanupStrategy: removalTimeBased
-#        historyRemovalTimeStrategy: end
-#        historyTimeToLive: 30
-#        batchOperationHistoryTimeToLive: 1
-#        historyCleanupJobLogTimeToLive: 1
-#        historyCleanupBatchWindowStartTime: "00:00"
-#        historyCleanupBatchWindowEndTime: "10:00"
-#        saturdayHistoryCleanupBatchWindowStartTime: "21:00"
-#        saturdayHistoryCleanupBatchWindowEndTime: "02:00"
-#        sundayHistoryCleanupBatchWindowStartTime: "21:00"
-#        sundayHistoryCleanupBatchWindowEndTime: "02:00"
-        # Java Serialization - enable at risk!
-#        javaSerializationFormatEnabled: true
+        #        historyCleanupStrategy: removalTimeBased
+        #        historyRemovalTimeStrategy: end
+        #        historyTimeToLive: 30
+        #        batchOperationHistoryTimeToLive: 1
+        #        historyCleanupJobLogTimeToLive: 1
+        #        historyCleanupBatchWindowStartTime: "00:00"
+        #        historyCleanupBatchWindowEndTime: "10:00"
+        #        saturdayHistoryCleanupBatchWindowStartTime: "21:00"
+        #        saturdayHistoryCleanupBatchWindowEndTime: "02:00"
+        #        sundayHistoryCleanupBatchWindowStartTime: "21:00"
+        #        sundayHistoryCleanupBatchWindowEndTime: "02:00"
         # MDC Logging
-#        loggingContextActivityId: activityName
+        #        loggingContextActivityId: activityName
         # Tasklist Query
-#        queryMaxResultsLimit: 2000
+        #        queryMaxResultsLimit: 2000
         # Telemetry
         initializeTelemetry: false
         telemetryReporterActivate: false
-#    job-execution:
-#     enabled: false
+    id-generator: strong # Other values: prefixed or simple (simple is not recommended).
+    job-execution:
+      enabled: true
+
+server:
+  port : 8080
+
+# H2 datasource
 spring:
   h2.console.enabled: true
   datasource:
-    #    url: jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+#    url: jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
     url: jdbc:h2:mem:camunda-db
     username: sa
     password: sa
+
+## MS SQL Server datasource
+#spring:
+#  datasource:
+#    url: jdbc:sqlserver://database.camunda.local:1417;databaseName=camunda_cs
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    username: sa
+#    password: Camunda1
+
+## Oracle datasource
+#spring:
+#  datasource:
+#    url: jdbc:oracle:thin:@database.camunda.local:1521/ORCLPDB1
+#    driver-class-name: oracle.jdbc.OracleDriver
+#    username: camunda
+#    password: Camunda1
+
+## Postgres datasource
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://database.camunda.local:5432/camunda?currentSchema=camunda1
+#    driver-class-name: org.postgresql.Driver
+#    username: camunda
+#    password: Camunda1
+
+# Logging Settings
+logging:
+  file:
+    path: ./logs           # specify a path to write to file, otherwise it defaults to the console.
+  level:
+    # Camunda Loggers
+    org.camunda: INFO     # WARNING!! THIS NAMESPACE WILL OUTPUT ALL CAMUNDA LOGS AT THE SPECIFIED LEVEL.
+    org.example.spring.boot.spin1: DEBUG
+#    org.camunda.bpm.engine.cmd: DEBUG
+#    org.camunda.bpm.engine.impl.persistence.entity: DEBUG
+#    org.camunda.bpm.engine.impl.batch.BatchEntity: DEBUG
+#    org.camunda.bpm.engine.impl.persistence.entity.ExecutionEntity: DEBUG
+#    org.camunda.bpm.engine.impl.persistence.entity.IncidentEntity: DEBUG
+#    org.camunda.bpm.engine.impl.persistence.entity.JobEntity: DEBUG
+#    org.camunda.bpm.engine.impl.persistence.entity.VariableInstanceEntity: DEBUG
+#    org.camunda.bpm.engine.jobexecutor: DEBUG
+#    org.camunda.bpm.engine.persistence: DEBUG
+#    org.camunda.bpm.engine.tx: DEBUG
+#    # Common Camunda Dependencies
+#    org.apache.ibatis: INFO
+#    # Add Catalina logging
+#    org.apache.catalina: INFO
+#    # Add Tomcat logging
+#    org.apache.tomcat: INFO

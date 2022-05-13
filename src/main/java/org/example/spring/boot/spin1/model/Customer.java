@@ -1,4 +1,4 @@
-package org.camunda.bpm.spring.boot.spin1.model;
+package org.example.spring.boot.spin1.model;
 
 import java.io.Serializable;
 
