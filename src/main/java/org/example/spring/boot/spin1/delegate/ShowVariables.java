@@ -19,7 +19,7 @@ import java.util.Map;
 @Component("ShowVariables")
 @Slf4j
 public class ShowVariables implements JavaDelegate {
-    private RepositoryService repositoryService;
+     private RepositoryService repositoryService;
 
     public ShowVariables(RepositoryService repositoryService) {
         this.repositoryService = repositoryService;
